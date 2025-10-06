@@ -11,8 +11,10 @@ export class CategoryView implements OnInit {
   category: string = 'all';
   constructor(private route: ActivatedRoute) {}
   ngOnInit() {
-    const categoryId = this.route.snapshot.paramMap.get('id');
-    console.log('Category ID:', categoryId);
-    this.category = categoryId ? categoryId : 'all';
+     this.route.paramMap.subscribe((params) => {
+      const categoryId = params.get('id');
+      console.log('Category ID:', categoryId);
+      this.category = categoryId ? categoryId : 'all';
+    });
   }
 }
