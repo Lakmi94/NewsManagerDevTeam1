@@ -3,19 +3,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">All</a>
+          <a class="nav-link" aria-current="page" [routerLink]="['/category', 'all']">All</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">National</a>
+          <a class="nav-link" [routerLink]="['/category', 'national']">National</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">International</a>
+          <a class="nav-link" [routerLink]="['/category', 'international']">International</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Economy</a>
+          <a class="nav-link" [routerLink]="['/category', 'economy']">Economy</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sports</a>
+          <a class="nav-link" [routerLink]="['/category', 'sports']">Sports</a>
         </li>
       </ul>
       <div>
@@ -47,9 +47,6 @@
           />
           <button class="btn btn-outline-success" type="submit">Login</button>
         </form>
-        <!-- <div *ngIf="loggedIn">
-          <div>Welcome, {{ user.username }}</div>
-        </div> -->
         <div  class="d-flex" *ngIf="loginService.user$ | async as currentUser">
           <div class="me-2">Welcome, {{ user.username }}</div>
           <button class="btn btn-outline-danger btn-sm" (click)="loginService.clearUser()">
