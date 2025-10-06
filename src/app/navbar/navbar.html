@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-end">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#">All</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">National</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">International</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Economy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Sports</a>
+        </li>
+      </ul>
+      <div>
+        <form
+          *ngIf="!loggedIn"
+          class="d-flex"
+          #loginForm="ngForm"
+          (ngSubmit)="login(user, loginForm)"
+        >
+          <input
+            class="form-control me-2"
+            type="text"
+            required
+            name="username"
+            placeholder="Username"
+            [(ngModel)]="user.username"
+            #username="ngModel"
+            aria-label="Username"
+          />
+          <input
+            class="form-control me-2"
+            type="password"
+            required
+            name="password"
+            placeholder="Password"
+            [(ngModel)]="user.password"
+            #password="ngModel"
+            aria-label="Password"
+          />
+          <button class="btn btn-outline-success" type="submit">Login</button>
+        </form>
+        <!-- <div *ngIf="loggedIn">
+          <div>Welcome, {{ user.username }}</div>
+        </div> -->
+        <div  class="d-flex" *ngIf="loginService.user$ | async as currentUser">
+          <div class="me-2">Welcome, {{ user.username }}</div>
+          <button class="btn btn-outline-danger btn-sm" (click)="loginService.clearUser()">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
