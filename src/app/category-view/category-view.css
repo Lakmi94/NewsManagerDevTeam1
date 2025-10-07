@@ -1,14 +1,16 @@
 .card-content {
+    margin-top: 2%;
     padding: 2%;
     flex: 1;
     overflow-y: auto;
-    background: antiquewhite;
+    background: var(--color-bg); 
 }
 
 .card{
-    background-color: #eeeee4;
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: var(--color-border);
 }
-
 
 .card-body {
   position: relative;
