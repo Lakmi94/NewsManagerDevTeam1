@@ -1,59 +1,71 @@
-# NewsManagerDevTeam1
+This repository contains the solutions for the **Programming of User Interfaces** Angular exercises.
+All tasks are done in **groups of three**.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+---
 
-## Development server
+## Authors
 
-To start a local development server, run:
+* Djamila Zimmermann
+* Nasim Ghorbani-Elizeh
+* Lakmi Pabasara Kulathunga Weerapperuma Achchi Athukoralage
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 📘 Project Overview
 
-## Code scaffolding
+Develop a **News Manager Application** integrating three interfaces:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* **Web (Angular)**
+* **Desktop (JavaFX)**
+* **Android**
 
-```bash
-ng generate component component-name
-```
+The project follows the **CRUD pattern** (Create, Read, Update, Delete) and connects to a REST API using an API key system for authentication.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+### Web Application (Angular)
 
-## Building
+#### Functional Requirements
 
-To build the project run:
+* Show list of articles on main page (title, subtitle, abstract, thumbnail).
+* Clicking title/image → open article details page.
+* **Logged-in users** can:
 
-```bash
-ng build
-```
+  * Create new articles.
+  * Edit existing articles.
+  * Delete articles (with confirmation and feedback).
+* Include **category filter** and **text search** in the navigation bar.
+* Support responsive design (collapsible navbar on mobile).
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+#### Article Details Page
 
-## Running unit tests
+* Show title, subtitle, abstract, category, body, and image.
+* Display last modification date and user.
+* No editing allowed here.
+* Render HTML content correctly.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+#### Article Edition / Creation Form
 
-```bash
-ng test
-```
+* Form fields: title, subtitle, abstract, body (HTML), category (dropdown), image.
+* Validate all mandatory fields (title, category, abstract).
+* Include buttons: “Save”, “Cancel/Back to Main Page”.
+* Provide user feedback after save.
 
-## Running end-to-end tests
+#### Login Form
 
-For end-to-end (e2e) testing, run:
+* Username + password fields on main page.
+* On success → replace with “Hello [username]” + logout button.
+* On failure → show error message.
 
-```bash
-ng e2e
-```
+#### Technical Details
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+* Framework: **Angular (Single Page Application)** + **Bootstrap**.
+* Use services:
 
-## Additional Resources
+  * `NewsService` – API communication.
+  * `LoginService` – Authentication handling.
+* Manage API keys:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  * Anonymous key for default access.
+  * User key after login; restore anonymous key on logout.
+* For images: use base64 encoding and proper media type display.
