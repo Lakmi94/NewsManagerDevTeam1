@@ -1,1 +1,21 @@
-<p>{{category}}</p>
+<!-- <p>{{category}}</p> -->
+
+<div class="card-content">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" *ngFor="let card of cards">
+            <div class="card">
+            <!-- Alternative: <div class="card h-100">  -->
+                <img [src]="card.src" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.title }}</h5>
+                    <p class="card-text clamp-3">{{ card.text }}</p>
+                    <div class="more" href="#">...more</div>
+                </div>
+
+                <div class="card-footer">
+                    <small class="text-body-secondary">{{ card.updated }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
