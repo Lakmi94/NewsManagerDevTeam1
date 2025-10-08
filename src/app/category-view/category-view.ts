@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Article } from '../interfaces/article';
 import * as _ from 'lodash';
 import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
+import { LoginService } from '../services/login-service';
 
 @Component({
   selector: 'app-category-view',
@@ -16,9 +17,9 @@ import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
 export class CategoryView implements OnInit {
 
   news: Article[] = [];
-
+  loggedIn: boolean = false;
   category: string = 'all';
-  constructor(private route: ActivatedRoute, private newsService: News) {
+  constructor(private route: ActivatedRoute, private newsService: News, public loginService: LoginService) {
     this.newsService.setAnonymousApiKey();
   }
   ngOnInit() {
@@ -26,6 +27,9 @@ export class CategoryView implements OnInit {
       const categoryId = params.get('id');
       console.log('Category ID:', categoryId);
       this.category = categoryId ? categoryId : 'all';
+    });
+    this.loginService.user$.subscribe((currentUser) => {
+      this.loggedIn = !!currentUser;
     });
     this.newsService.getArticles().subscribe((articles) => {
       this.news = articles;

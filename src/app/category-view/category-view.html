@@ -15,6 +15,9 @@
       </div>
       <div class="card-footer">
         <div [innerHTML]="card.abstract | safeHtml"></div>
+        <div *ngIf="loggedIn">
+          <button>Edit</button><button>Remove</button>
+        </div>
       </div>
     </div>
   </div>

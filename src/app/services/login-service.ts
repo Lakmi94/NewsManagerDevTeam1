@@ -10,10 +10,17 @@ export class LoginService {
   private userSubject = new BehaviorSubject<User | null>(null);
   user$ = this.userSubject.asObservable();
 
-  setUser(user: User) {
-    console.log('setting user', user);
-    this.userSubject.next(user);
-    this.loggedIn.next(true);
+  setUser(user: User): boolean {
+    if(JSON.stringify(user) == JSON.stringify({username:"DEV_TEAM_01", password:"654321@01"})){
+      console.log('setting user', user);
+      this.userSubject.next(user);
+      this.loggedIn.next(true);
+      return true;
+    }
+    else {
+      console.log('Login failed');
+      return false;
+    }
   }
 
   clearUser() {

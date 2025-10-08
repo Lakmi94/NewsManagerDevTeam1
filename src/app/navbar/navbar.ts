@@ -28,7 +28,10 @@ export class Navbar implements OnInit {
 
   login(user: User, form: NgForm): void {
      const userCopy = { ...user };           // copy for service
-  this.loginService.setUser(userCopy);
-  // form.resetForm({ username: '', password: '' });
+    if (!this.loginService.setUser(userCopy)){
+      window.alert("Username or Password incorrect");
+      form.resetForm({ username: '', password: '' });
+    }
+  
   }
 }
