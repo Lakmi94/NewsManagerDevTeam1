@@ -9,7 +9,9 @@
       <div class="card-body">
         <h5 class="card-title">{{ card.title }}</h5>
         <p class="card-text text-muted">{{ card.category }}</p>
-        <div class="more">...more</div>
+        <div class="more">
+            <a [routerLink]="['/article', card.id]">more...</a>
+        </div>
       </div>
       <div class="card-footer">
         <div [innerHTML]="card.abstract | safeHtml"></div>

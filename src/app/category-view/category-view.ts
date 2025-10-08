@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { Article } from '../interfaces/article';
 import * as _ from 'lodash';
 import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
+
 @Component({
   selector: 'app-category-view',
    standalone: true,
-  imports: [CommonModule, SafeHtmlPipe],
+  imports: [CommonModule, SafeHtmlPipe, RouterLink],
   templateUrl: './category-view.html',
   styleUrl: './category-view.css',
 })
