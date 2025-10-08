@@ -1,1 +1,5 @@
-<p>article-view works!</p>
+<div *ngIf="article$ | async as article">
+  <div>{{ article.title }}</div>
+  <div>{{ article.subtitle }}</div>
+  <div *ngIf="article.body" [innerHTML]="article.body | safeHtml"></div>
+</div>
