@@ -7,5 +7,5 @@ export const routes: Routes = [
   { path: '', redirectTo: '/category/all', pathMatch: 'full' },
   { path: 'category/:id', component: CategoryView },
   { path: 'article/:id', component: ArticleView },
-  { path: 'edit', component: ArticleEdit},
+  { path: 'edit/:id', component: ArticleEdit},
 ];
