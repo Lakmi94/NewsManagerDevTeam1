@@ -1,0 +1,13 @@
+.article-container {
+    padding: 5%;
+   display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-img-top{
+    height: 50%;
+    width: 50%;
+    margin: 20px;
+}

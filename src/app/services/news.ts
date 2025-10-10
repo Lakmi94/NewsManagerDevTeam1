@@ -51,11 +51,8 @@ export class News {
       return this.http.delete<Article>(url, this.httpOptions);
     }
   getArticle(id: string|null): Observable<Article> {
-      console.log('Requesting article id=' + id);
       const url = `${this.articleUrl}/${id}`;
-      const article = this.http.get<Article>(url, this.httpOptions);
-      console.log('article from service',article);
-      
+      const article = this.http.get<Article>(url, this.httpOptions);      
       return article;
 
     }

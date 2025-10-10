@@ -37,7 +37,7 @@
   grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
   gap: 1rem;                      /* space between rows and columns */
  
-  padding: 2%;
+  padding: 5%;
   border: 1px solid red;
 
   /* horizontal gap = 1rem, vertical gap = 0 */
