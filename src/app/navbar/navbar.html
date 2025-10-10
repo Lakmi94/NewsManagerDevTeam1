@@ -1,5 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-end fixed-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
+    <a class="navbar-brand" href="#">UPM News</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -21,42 +22,25 @@
           <a class="nav-link" [routerLink]="['/category', 'technology']">Technology</a>
         </li>
       </ul>
-      <div>
-        <form
-          *ngIf="!loggedIn"
-          class="d-flex"
-          #loginForm="ngForm"
-          (ngSubmit)="login(user, loginForm)"
-        >
-          <input
-            class="form-control me-2"
-            type="text"
-            required
-            name="username"
-            placeholder="Username"
-            [(ngModel)]="user.username"
-            #username="ngModel"
-            aria-label="Username"
-          />
-          <input
-            class="form-control me-2"
-            type="password"
-            required
-            name="password"
-            placeholder="Password"
-            [(ngModel)]="user.password"
-            #password="ngModel"
-            aria-label="Password"
-          />
-          <button class="btn" type="submit">Login</button>
-        </form>
-        <div  class="d-flex" *ngIf="loginService.user$ | async as currentUser">
-          <div class="me-2">Welcome, {{ user.username }}</div>
-          <button class="btn btn-outline-danger btn-sm" (click)="loginService.clearUser()">
-            Logout
-          </button>
-        </div>
+    </div>
+    <div>
+      <form *ngIf="!loggedIn" class="d-flex" #loginForm="ngForm" (ngSubmit)="login(user, loginForm)">
+        <input class="form-control me-2" type="text" required name="username" placeholder="Username"
+          [(ngModel)]="user.username" #username="ngModel" aria-label="Username" />
+        <input class="form-control me-2" type="password" required name="password" placeholder="Password"
+          [(ngModel)]="user.password" #password="ngModel" aria-label="Password" />
+        <button class="btn" type="submit">Login</button>
+      </form>
+      <div class="d-flex" *ngIf="loginService.user$ | async as currentUser">
+        <div class="me-2">Welcome, {{ user.username }}</div>
+        <button class="btn btn btn-outline-secondary" (click)="loginService.clearUser()">
+          Logout
+        </button>
       </div>
     </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   </div>
 </nav>

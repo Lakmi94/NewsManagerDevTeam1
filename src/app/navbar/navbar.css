@@ -1,12 +1,19 @@
 .navbar {
   background-color: var(--color-primary) !important;
-  border-bottom: 1px solid var(--color-border) !important;
-}
-
-.navbar .nav-link {
   color: var(--color-text) !important;
 }
 
+.navbar a,
+.navbar .nav-link,
+.navbar .navbar-brand {
+  color: var(--color-text) !important;
+}
+
+.navbar a:hover,
 .navbar .nav-link:hover {
-  color: var(--color-bg) !important;
+  color: #f8f9fa !important;
+}
+
+.navbar-toggler-icon {
+  color: var(--color-navbar-text) !important;
 }

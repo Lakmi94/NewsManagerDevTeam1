@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 :root{
-  --color-primary: #D4A151;
-  --color-bg: #23494A55;
-  --color-surface: #E2E2E4;
-  --color-text:  #494A55;
+  --color-primary: #23432352;
+  --color-bg: #40404014;
+  --color-surface: #ffffff;
+  --color-text:  #000000;
   --color-border: #9F563A;
+  --color-navbar-text: #ffffff;
 }
 
 /* body {

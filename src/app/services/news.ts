@@ -16,7 +16,7 @@ export class News {
    }
 
    private APIKEY: string | null;
-     private APIKEY_ANON = 'ANON01'; 
+     private APIKEY_ANON = 'ANON02'; 
 
      private httpOptions = {
       headers: new HttpHeaders({
