@@ -1,4 +1,4 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, ViewChild} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Article } from '../interfaces/article';
 import { RouterLink, ActivatedRoute } from '@angular/router';
@@ -37,5 +37,23 @@ export class ArticleEdit {
         const id = params.get('id');
         return this.newsService.getArticle(id);
       })
-    );  
+    );
+  
+  @ViewChild('articleContent') articleContent: any;
+
+  saveArticle(): void {
+    this.article$.pipe(take(1)).subscribe(event => this.article = event);
+    this.newsService.updateArticle(this.article);
+  }
+
+      //this.email_service.removeList();
+  // ngOnInit(): void {
+  //   this.route.queryParamMap.subscribe(params => {
+  //     let id = params.get('id'); 
+  //     let num_id: string = String(id);
+  //     let article: Observable<Article> = this.newsService.getArticle(num_id);
+  //     article.pipe(take(1)).subscribe(event => this.article = { event });
+  //   })
+  // }
+  
 }
