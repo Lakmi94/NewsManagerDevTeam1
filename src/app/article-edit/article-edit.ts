@@ -35,15 +35,22 @@ export class ArticleEdit {
   article$: Observable<Article> = this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
-        return this.newsService.getArticle(id);
+        let article = this.newsService.getArticle(id);
+        article.subscribe(event => this.article = event);
+        return article;
       })
     );
   
   @ViewChild('articleContent') articleContent: any;
 
   saveArticle(): void {
-    this.article$.pipe(take(1)).subscribe(event => this.article = event);
-    this.newsService.updateArticle(this.article);
+    console.log(this.article);
+    this.newsService.updateArticle({...this.article}).subscribe(event => {
+      console.log(event);
+    });
+    this.newsService.getArticle(this.article.id).subscribe(event => {
+      console.log(event);
+    });
   }
 
       //this.email_service.removeList();
