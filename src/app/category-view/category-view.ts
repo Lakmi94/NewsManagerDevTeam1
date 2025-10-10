@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { map, switchMap, startWith, combineLatest } from 'rxjs';
 import { Observable } from 'rxjs';
-
+import { FormsModule } from '@angular/forms';
 import { News } from '../services/news';
 import { Article } from '../interfaces/article';
 import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
@@ -12,7 +12,7 @@ import { LoginService } from '../services/login-service';
 @Component({
   selector: 'app-category-view',
   standalone: true,
-  imports: [CommonModule, RouterLink, SafeHtmlPipe],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, FormsModule],
   templateUrl: './category-view.html',
   styleUrls: ['./category-view.css'],
 })
@@ -20,6 +20,7 @@ export class CategoryView {
   private route = inject(ActivatedRoute);
   private newsService = inject(News);
   private loginService = inject(LoginService);
+  searchTerm: string = '';
 
   constructor() {
     this.newsService.setAnonymousApiKey();
@@ -29,7 +30,7 @@ export class CategoryView {
 
   private category$ = this.route.paramMap.pipe(
     map((params) => (params.get('id')?.toLowerCase() ?? 'all')),
-    startWith('all') // ensures first emission
+    startWith('all') 
   );
 
   news$: Observable<Article[]> = combineLatest([

@@ -37,15 +37,5 @@ export class ArticleEdit {
         const id = params.get('id');
         return this.newsService.getArticle(id);
       })
-    );
-
-  // ngOnInit(): void {
-  //   this.route.queryParamMap.subscribe(params => {
-  //     let id = params.get('id'); 
-  //     let num_id: string = String(id);
-  //     let article: Observable<Article> = this.newsService.getArticle(num_id);
-  //     article.pipe(take(1)).subscribe(event => this.article = { event });
-  //   })
-  // }
-  
+    );  
 }

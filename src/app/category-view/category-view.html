@@ -1,5 +1,12 @@
-<div class="news-container" *ngIf="news$ | async as news">
-  <div class="news-card" *ngFor="let card of news">
+<div class="news d-flex flex-column" *ngIf="news$ | async as news">
+   <div class="mb-4 justify-content-end d-flex">
+    <label>
+     Search:
+      <input type="text" [(ngModel)]="searchTerm">
+    </label>
+  </div>
+  <div class="news-container">
+     <div class="news-card" *ngFor="let card of news">
     <div class="card">
       <img
         [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
@@ -21,4 +28,6 @@
       </div>
     </div>
   </div>
+  </div>
+ 
 </div>
