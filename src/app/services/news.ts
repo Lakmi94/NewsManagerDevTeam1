@@ -13,24 +13,24 @@ export class News {
 
   constructor(private http: HttpClient) {
     this.APIKEY = "";
-   }
+  }
 
-   private APIKEY: string | null;
-     private APIKEY_ANON = 'ANON01'; 
+  private APIKEY: string | null;
+  private APIKEY_ANON = 'ANON01'; 
 
-     private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON
-      })
-    };
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY_ANON
+    })
+  };
 
-    // Modifies the APIKEY with the received value
-    setUserApiKey(apikey: string | undefined) {
-      if (apikey) {
-        this.APIKEY = apikey;
-      } 
- this.httpOptions = {
+  // Modifies the APIKEY with the received value
+  setUserApiKey(apikey: string | undefined) {
+    if (apikey) {
+      this.APIKEY = apikey;
+    } 
+    this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'PUIRESTAUTH apikey=' + this.APIKEY
@@ -38,33 +38,33 @@ export class News {
     };
     console.log('Apikey successfully changed ' + this.APIKEY);
   }
-   setAnonymousApiKey() {
+  setAnonymousApiKey() {
     this.setUserApiKey(this.APIKEY_ANON);
   }
   getArticles(): Observable<Article[]> {
-      return this.http.get<Article[]>(this.newsUrl, this.httpOptions);
-    }
+    return this.http.get<Article[]>(this.newsUrl, this.httpOptions);
+  }
   
-    deleteArticle(article: Article | number): Observable<Article> {
-      const id = typeof article === 'number' ? article : article.id;
-      const url = `${this.articleUrl}/${id}`;
-      return this.http.delete<Article>(url, this.httpOptions);
-    }
+  deleteArticle(article: Article | number): Observable<Article> {
+    const id = typeof article === 'number' ? article : article.id;
+    const url = `${this.articleUrl}/${id}`;
+    return this.http.delete<Article>(url, this.httpOptions);
+  }
   getArticle(id: string|null): Observable<Article> {
-      const url = `${this.articleUrl}/${id}`;
-      const article = this.http.get<Article>(url, this.httpOptions);      
-      return article;
+    const url = `${this.articleUrl}/${id}`;
+    const article = this.http.get<Article>(url, this.httpOptions);      
+    return article;
 
-    }
+  }
   
-    updateArticle(article: Article): Observable<Article> {
-      console.log('Updating article id=' + article.id);
-      return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
-    }
+  updateArticle(article: Article): Observable<Article> {
+    console.log('Updating article id=' + article.id);
+    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+  }
   
-    createArticle(article: Article): Observable<Article> {
-      console.log('Creating article');
-      console.log(article);
-      return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
-    }
+  createArticle(article: Article): Observable<Article> {
+    console.log('Creating article');
+    console.log(article);
+    return this.http.post<Article>(this.articleUrl, article, this.httpOptions);
+  }
 }
