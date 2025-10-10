@@ -1,4 +1,4 @@
-<div class="news-container">
+<div class="news-container" *ngIf="news$ | async as news">
   <div class="news-card" *ngFor="let card of news">
     <div class="card">
       <img
@@ -15,7 +15,7 @@
       </div>
       <div class="card-footer">
         <div [innerHTML]="card.abstract | safeHtml"></div>
-        <div *ngIf="loggedIn">
+        <div *ngIf="loggedIn$ | async">
           <button [routerLink]="['/edit', card.id]">Edit</button><button>Remove</button>
         </div>
       </div>
