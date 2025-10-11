@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Article } from '../interfaces/article';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { RouterLink, ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { News } from '../services/news';
 import * as _ from 'lodash'; 
@@ -34,6 +34,7 @@ export class ArticleEdit {
   
   private newsService = inject(News);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   id = this.route.snapshot.paramMap.get("id");
 
@@ -49,6 +50,7 @@ export class ArticleEdit {
     console.log('Saving:', this.article);
     this.newsService.updateArticle(this.article).subscribe((event) => {
       console.log('Updated:', event);
+      this.router.navigate(["/category/all"]);
     });
   }
   
