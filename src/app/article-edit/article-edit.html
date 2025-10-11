@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card" style="padding-top: 5%;">
   <div class="card-body">
-    <h1 class="card-title">Edit Article</h1>
+    <h1 class="card-title">{{ id == null ? 'Create New' : 'Edit' }} Article</h1>
 
     <form #articleContent="ngForm">
       <div class="form-group">
