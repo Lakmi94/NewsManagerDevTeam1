@@ -20,18 +20,18 @@ export class Navbar implements OnInit {
   @ViewChild('loginForm') loginForm: any;
 
   ngOnInit() {
-    this.loginService.user$.subscribe((currentUser) => {
-      this.loggedIn = !!currentUser;
-      this.user = currentUser || { username: '', password: '' };
-    });
+    let newUser = this.loginService.getUser();
+    if (newUser != null) {
+      this.user = { ...newUser };
+    };
   }
 
   login(user: User, form: NgForm): void {
-     const userCopy = { ...user };
-    if (!this.loginService.setUser(userCopy)){
-      window.alert("Username or Password incorrect");
-      form.resetForm({ username: '', password: '' });
-    }
-  
+    this.loginService.login(user.username, user.password).subscribe(event => {
+      if (!this.loginService.isLogged()) {
+        window.alert("Username or Password incorrect");
+        form.resetForm({ username: '', password: '' });
+      }
+    });
   }
 }

@@ -13,7 +13,7 @@ import { switchMap, take } from 'rxjs/operators';
   templateUrl: './article-edit.html',
   styleUrls: ['./article-edit.css'],
 })
-export class ArticleEdit implements OnInit {
+export class ArticleEdit {
   article: Article = {
     id: 0,
     id_user: 0,
@@ -30,18 +30,12 @@ export class ArticleEdit implements OnInit {
   private newsService = inject(News);
   private route = inject(ActivatedRoute);
 
-  ngOnInit() {
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          const id = params.get('id');
-          return this.newsService.getArticle(id!);
-        }),
-        take(1)
-      )
-      .subscribe((article) => {
-        this.article = { ...article };
-      });
+  id = this.route.snapshot.paramMap.get("id");
+
+  constructor() {
+    this.newsService.getArticle(this.id).subscribe((article) => {
+      this.article = { ...article };
+    });
   }
 
   saveArticle(): void {

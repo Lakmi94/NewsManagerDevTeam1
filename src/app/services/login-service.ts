@@ -1,38 +1,71 @@
 import { Injectable } from '@angular/core';
-
 import { User } from '../interfaces/user';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
+
 export class LoginService {
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  private userSubject = new BehaviorSubject<User | null>(null);
-  user$ = this.userSubject.asObservable();
 
-  setUser(user: User): boolean {
-    if(JSON.stringify(user) == JSON.stringify({username:"DEV_TEAM_01", password:"654321@01"})){
-      console.log('setting user', user);
-      this.userSubject.next(user);
-      this.loggedIn.next(true);
-      return true;
-    }
-    else {
-      console.log('Login failed');
-      return false;
-    }
+  private user: User | null = null;
+
+  private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
+
+  private message: string | null = null;
+
+  private httpOptions = {
+    headers: new HttpHeaders()
+      .set('Content-Type', 'x-www-form-urlencoded')
+  };
+
+  constructor(private http: HttpClient) { }
+
+  isLogged() {
+    return this.user != null;
   }
 
-  clearUser() {
-    this.userSubject.next(null);
-    this.loggedIn.next(false);
+  login(name: string, pwd: string): Observable<User> {
+    const usereq = new HttpParams()
+      .set('username', name)
+      .set('passwd', pwd);
+
+    return this.http.post<User>(this.loginUrl, usereq).pipe(
+      tap(user => {
+        this.user = user;
+      }), 
+      catchError(
+        (error): Observable<any> => {
+          console.log("Authentication Failed");
+          return of(null);
+        },
+      )
+   );
   }
 
-  getCurrentUser(): User | null {
-    const currentUser = this.userSubject.getValue();
-    console.log('getting user', currentUser);
-    console.log('is logged in', this.loggedIn.getValue());
-
-    return currentUser;
+  getUser() {
+    return this.user;
   }
+
+  logout() {
+    this.user = null;
+  }
+
+
+  private handleError<User>(operation = 'operation', result?: User) {
+    return (error: any): Observable<User> => {
+      this.user = null;
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as User);
+    };
+  }
+
 }

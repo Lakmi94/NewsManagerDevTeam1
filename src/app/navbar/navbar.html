@@ -23,7 +23,7 @@
       </ul>
       <div>
         <form
-          *ngIf="!loggedIn"
+          *ngIf="!loginService.isLogged()"
           class="d-flex"
           #loginForm="ngForm"
           (ngSubmit)="login(user, loginForm)"
@@ -50,9 +50,9 @@
           />
           <button class="btn" type="submit">Login</button>
         </form>
-        <div  class="d-flex" *ngIf="loginService.user$ | async as currentUser">
+        <div  class="d-flex" *ngIf="loginService.isLogged()">
           <div class="me-2">Welcome, {{ user.username }}</div>
-          <button class="btn btn-outline-danger btn-sm" (click)="loginService.clearUser()">
+          <button class="btn btn-outline-danger btn-sm" (click)="loginService.logout()">
             Logout
           </button>
         </div>

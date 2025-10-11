@@ -22,7 +22,7 @@
       </div>
       <div class="card-footer">
         <div [innerHTML]="card.abstract | safeHtml"></div>
-        <div *ngIf="loggedIn$ | async">
+        <div *ngIf="loginService.isLogged()">
           <button [routerLink]="['/edit', card.id]">Edit</button><button>Remove</button>
         </div>
       </div>

@@ -19,7 +19,7 @@ import { FilterArticlesPipe } from '../pipes/filter-text-pipe';
 export class CategoryView {
   private route = inject(ActivatedRoute);
   private newsService = inject(News);
-  private loginService = inject(LoginService);
+  public loginService = inject(LoginService);
   searchTerm: string = '';
 
   constructor() {
@@ -28,8 +28,6 @@ export class CategoryView {
     //   this.searchTerm = '';
     // });
   }
-
-  loggedIn$ = this.loginService.user$.pipe(map((user) => !!user));
 
   private category$ = this.route.paramMap.pipe(
     map((params) => params.get('id')?.toLowerCase() ?? 'all'),
