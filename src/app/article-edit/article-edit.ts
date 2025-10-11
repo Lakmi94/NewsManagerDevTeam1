@@ -33,9 +33,11 @@ export class ArticleEdit {
   id = this.route.snapshot.paramMap.get("id");
 
   constructor() {
-    this.newsService.getArticle(this.id).subscribe((article) => {
-      this.article = { ...article };
-    });
+    if (this.id !=null) {
+      this.newsService.getArticle(this.id).subscribe((article) => {
+        this.article = { ...article };
+      });
+    }
   }
 
   saveArticle(): void {

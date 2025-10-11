@@ -13,6 +13,9 @@
           #title="ngModel"
           name="title"
         />
+        <div *ngIf="!title.valid && !title.untouched" class="text-danger">
+            Please enter an article title.
+        </div>
       </div>
 
       <div class="form-group">
@@ -22,8 +25,12 @@
           type="text"
           required
           [(ngModel)]="article.subtitle"
+          #subtitle="ngModel"
           name="subtitle"
         />
+        <div *ngIf="!subtitle.valid && !subtitle.untouched" class="text-danger">
+            Please enter an article subtitle.
+        </div>
       </div>
 
       <div class="form-group">
@@ -32,16 +39,19 @@
           class="form-control"
           required
           [(ngModel)]="article.abstract"
+          #abstract = "ngModel"
           name="abstract"
           rows="2"
         ></textarea>
+        <div *ngIf="!abstract.valid && !abstract.untouched" class="text-danger">
+            Please enter an article abstract.
+        </div>
       </div>
 
       <div class="form-group">
         <p class="fw-bolder">Body:</p>
         <textarea
           class="form-control"
-          required
           [(ngModel)]="article.body"
           name="body"
           rows="10"
@@ -56,6 +66,7 @@
       <button
         class="btn btn-primary btn-lg"
         (click)="saveArticle()"
+        [disabled]="!articleContent.valid"
         type="button"
       >
         Save
