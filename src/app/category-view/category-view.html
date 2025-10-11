@@ -6,7 +6,7 @@
     </label>
   </div>
   <div class="news-container">
-     <div class="news-card" *ngFor="let card of news">
+     <div class="news-card" *ngFor="let card of (news | filterArticles: searchTerm)">
     <div class="card">
       <img
         [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
