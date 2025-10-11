@@ -52,7 +52,7 @@
         </form>
         <div  class="d-flex" *ngIf="loginService.isLogged()">
           <div class="me-2">Welcome, {{ user.username }}</div>
-          <button class="btn btn-outline-danger btn-sm" (click)="loginService.logout()">
+          <button class="btn btn-outline-danger btn-sm" (click)="logout(loginForm)">
             Logout
           </button>
         </div>

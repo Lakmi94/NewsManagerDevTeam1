@@ -12,19 +12,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar implements OnInit {
+export class Navbar {
   user: User = { username: '', password: '' };
   loggedIn: boolean = false;
  constructor(public loginService: LoginService) {}
 
   @ViewChild('loginForm') loginForm: any;
-
-  ngOnInit() {
-    let newUser = this.loginService.getUser();
-    if (newUser != null) {
-      this.user = { ...newUser };
-    };
-  }
 
   login(user: User, form: NgForm): void {
     this.loginService.login(user.username, user.password).subscribe(event => {
@@ -33,5 +26,10 @@ export class Navbar implements OnInit {
         form.resetForm({ username: '', password: '' });
       }
     });
+  }
+  logout(form: NgForm):void{
+    this.user = { username: '', password: '' };
+    this.loginService.logout();
+    form.resetForm({ username: '', password: '' });
   }
 }

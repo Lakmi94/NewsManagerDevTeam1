@@ -1,8 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from '../interfaces/user';
+import { Login } from '../interfaces/login'
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { News } from '../services/news';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +13,11 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 export class LoginService {
 
-  private user: User | null = null;
+  private user: Login | null = null;
 
   private loginUrl = 'http://sanger.dia.fi.upm.es/pui-rest-news/login';
 
-  private message: string | null = null;
+  private newsService = inject(News);
 
   private httpOptions = {
     headers: new HttpHeaders()
@@ -27,18 +30,20 @@ export class LoginService {
     return this.user != null;
   }
 
-  login(name: string, pwd: string): Observable<User> {
+  login(name: string, pwd: string): Observable<Login> {
     const usereq = new HttpParams()
       .set('username', name)
       .set('passwd', pwd);
 
-    return this.http.post<User>(this.loginUrl, usereq).pipe(
+    return this.http.post<Login>(this.loginUrl, usereq).pipe(
       tap(user => {
         this.user = user;
+        this.newsService.setUserApiKey(user.apikey);
       }), 
       catchError(
         (error): Observable<any> => {
           console.log("Authentication Failed");
+          this.newsService.setAnonymousApiKey();
           return of(null);
         },
       )
@@ -51,6 +56,7 @@ export class LoginService {
 
   logout() {
     this.user = null;
+    this.newsService.setAnonymousApiKey();
   }
 
 
