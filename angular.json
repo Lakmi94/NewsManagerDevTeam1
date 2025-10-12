@@ -19,11 +19,15 @@
               {
                 "glob": "**/*",
                 "input": "src/assets",
-                "output": "/assets/" }
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
