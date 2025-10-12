@@ -1,11 +1,12 @@
 <div class="news d-flex flex-column" *ngIf="news$ | async as news">
-	<!-- Navbar area -->
 	<div class="mb-4 justify-content-end d-flex">
 		<form class="d-flex" role="search">
-			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" type="text"
-				[(ngModel)]="searchTerm" name="searchTerm" />
-			<button class="btn btn-outline-success" type="submit">Search</button>
+			<input class="form-control me-2" type="search" placeholder="Search" [(ngModel)]="searchTerm"
+				(ngModelChange)="onSearchChange($event)" name="searchTerm" />
 		</form>
+
+		<a *ngIf="loginService.isLogged()" class="btn btn-primary" style="margin-left: 5px" routerLink="/new">Create
+			article</a>
 	</div>
 
 	<!-- News area -->
@@ -35,36 +36,38 @@
 				</div>
 
 				<!-- If logged in -->
-				<div class="logged-in-edit" *ngIf="loggedIn$ | async">
-					<button type="button" class="btn btn-primary btn-sm" [routerLink]="['/edit', card.id]">Edit</button>
-					<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+				<div *ngIf="loginService.isLogged()" class="logged-in-edit">
+					<button type="button" class="btn  btn-outline-success me-2"
+						[routerLink]="['/edit', card.id]">Edit</button>
+					<button type="button" class="btn  btn-outline-danger" data-bs-toggle="modal"
 						data-bs-target="#modal">Remove</button>
+				</div>
 
-					<!-- Modal -->
-					<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="modalLabel">Do you really want to delete this article?</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									If you are removing this article, it cannot be retrieved!
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Cancel</button>
-										<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete(card.id)">Yes, delete</button>									
-								</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="modalLabel">Do you really want to delete this article?
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								If you are removing this article, it cannot be retrieved!
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete(card.id)">Yes,
+									delete</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 			<div class="card-footer">
-				Updated 5 min ago
+				Updated: {{ getTimeAgo(card.update_date) }}
 			</div>
 		</div>
 	</div>

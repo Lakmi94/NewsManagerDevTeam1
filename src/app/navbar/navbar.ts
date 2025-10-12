@@ -12,26 +12,29 @@ import { RouterLink } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar implements OnInit {
+
+export class Navbar {
   user: User = { username: '', password: '' };
   loggedIn: boolean = false;
- constructor(public loginService: LoginService) {}
+  constructor(public loginService: LoginService) { }
 
   @ViewChild('loginForm') loginForm: any;
 
-  ngOnInit() {
-    this.loginService.user$.subscribe((currentUser) => {
-      this.loggedIn = !!currentUser;
-      this.user = currentUser || { username: '', password: '' };
+  login(user: User, form: NgForm): void {
+    this.loginService.login(user.username, user.password).subscribe(success => {
+      if (success) {
+        const name = user.username;
+        form.setValue({ username: name, password: '' });
+      } else {
+        window.alert("Username or Password incorrect");
+        form.resetForm({ username: '', password: '' });
+      }
     });
   }
 
-  login(user: User, form: NgForm): void {
-     const userCopy = { ...user };
-    if (!this.loginService.setUser(userCopy)){
-      window.alert("Username or Password incorrect");
-      form.resetForm({ username: '', password: '' });
-    }
-  
+  logout(form: NgForm): void {
+    this.user = { username: '', password: '' };
+    this.loginService.logout();
+    form.resetForm({ username: '', password: '' });
   }
 }

@@ -1,48 +1,96 @@
-<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Edit Article</h1>
-            <div *ngIf="article$ | async as article">
+<div class="card" style="padding-top: 5%;">
+  <div class="card-body">
+    <h1 class="card-title">{{ id == null ? 'Create New' : 'Edit' }} Article</h1>
 
-                <form #articleContent="ngForm">
-                    <div class="form-group">
-                        <p class="fw-bolder">Title:</p>
-                        <input class="form-control" type="article" required [(ngModel)]="article.title"
-                        name="title" #title="ngModel">
-                        <div class="text-danger">
-                            Please enter an article title.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="fw-bolder">Subtitle:</p>
-                        <input class="form-control" type="article" required [(ngModel)]="article.subtitle"
-                            name="subtitle">
-                        <div class="text-danger">
-                            Please enter a subtitle.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="fw-bolder">Abstract:</p>
-                        <textarea class="form-control" type="text" required [(ngModel)]="article.abstract"
-                            name="abstract" rows="2"></textarea>
-                        <div class="text-danger">
-                            <div>Please enter an abstract</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <p class="fw-bolder">Body:</p>
-                        <textarea class="form-control" type="text" required [(ngModel)]="article.body"
-                            name="body" rows="10"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <p class="fw-bolder">Image</p>
-                        <input class="form-control" type="body" name="body">
-                    </div>
-                </form>
-            </div>
-        <div>
-            <input class="btn btn-primary btn-lg"
-                (click)="saveArticle()" type="submit" value="Save">
-            <input class="btn btn-primary btn-lg" type="reset" value="Back" [routerLink]="['/category/all']">
+    <form #articleContent="ngForm">
+      <div class="form-group">
+        <p class="fw-bolder">Title:</p>
+        <input
+          class="form-control"
+          type="text"
+          required
+          [(ngModel)]="article.title"
+          #title="ngModel"
+          name="title"
+        />
+        <div *ngIf="!title.valid && !title.untouched" class="text-danger">
+            Please enter an article title.
         </div>
-    </div>
+      </div>
+
+      <div class="form-group">
+        <p class="fw-bolder">Subtitle:</p>
+        <input
+          class="form-control"
+          type="text"
+          required
+          [(ngModel)]="article.subtitle"
+          #subtitle="ngModel"
+          name="subtitle"
+        />
+        <div *ngIf="!subtitle.valid && !subtitle.untouched" class="text-danger">
+            Please enter an article subtitle.
+        </div>
+      </div>
+       
+      <div class="form-group">
+        <p class="fw-bolder">Category:</p>
+        <select #category="ngModel" required [(ngModel)]="article.category" name="category" id="category">
+            <option value="National">National</option>
+            <option value="International">International</option>
+            <option value="Economy">Economy</option>
+            <option value="Sports">Sports</option>
+            <option value="Technology">Technology</option>
+        </select>
+        <div *ngIf="!category.valid && !category.untouched" class="text-danger">
+            Please enter an article category.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <p class="fw-bolder">Abstract:</p>
+        <textarea
+          class="form-control"
+          required
+          [(ngModel)]="article.abstract"
+          #abstract = "ngModel"
+          name="abstract"
+          rows="2"
+        ></textarea>
+        <div *ngIf="!abstract.valid && !abstract.untouched" class="text-danger">
+            Please enter an article abstract.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <p class="fw-bolder">Body:</p>
+        <textarea
+          class="form-control"
+          [(ngModel)]="article.body"
+          name="body"
+          rows="10"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <p class="fw-bolder">Image</p>
+        <input type="file" required (change)="fileChangeEvent($event)">
+      </div>
+
+      <button
+        class="btn btn-primary btn-lg"
+        (click)="saveArticle()"
+        [disabled]="!articleContent.valid"
+        type="button"
+      >
+        Save
+      </button>
+      <input
+        class="btn btn-primary btn-lg"
+        type="reset"
+        value="Back"
+        [routerLink]="['/category/all']"
+      />
+    </form>
+  </div>
 </div>

@@ -8,4 +8,5 @@ export const routes: Routes = [
   { path: 'category/:id', component: CategoryView },
   { path: 'article/:id', component: ArticleView },
   { path: 'edit/:id', component: ArticleEdit},
+  { path: 'new', component: ArticleEdit},
 ];

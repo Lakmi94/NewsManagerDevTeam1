@@ -1,5 +1,8 @@
 .navbar {
   background-color: var(--color-primary) !important;
+}
+
+.navbar .nav-link {
   color: var(--color-text) !important;
 }
 
@@ -16,4 +19,8 @@
 
 .navbar-toggler-icon {
   color: var(--color-navbar-text) !important;
+}
+
+.btn {
+  /* border-color: var(--color-navbar-text); */
 }
