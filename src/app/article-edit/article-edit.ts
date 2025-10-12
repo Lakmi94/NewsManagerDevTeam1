@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Article } from '../interfaces/article';
-import { RouterLink, ActivatedRoute, Router} from '@angular/router';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { News } from '../services/news';
-import * as _ from 'lodash'; 
-
+import { ChangeDetectorRef } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-article-edit',
@@ -14,7 +14,7 @@ import * as _ from 'lodash';
   templateUrl: './article-edit.html',
   styleUrls: ['./article-edit.css'],
 })
-export class ArticleEdit {
+export class ArticleEdit implements OnInit {
   article: Article = {
     id: 0,
     id_user: 0,
@@ -29,50 +29,49 @@ export class ArticleEdit {
   };
 
   imageError: string | null = null;
-  isImageSaved: boolean = false;
+  isImageSaved = false;
   cardImageBase64: string | null = null;
-  
+
   private newsService = inject(News);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
-  id = this.route.snapshot.paramMap.get("id");
+  id = this.route.snapshot.paramMap.get('id');
 
-  constructor() {
-    if (this.id !=null) {
+  ngOnInit() {
+    if (this.id != null) {
       this.newsService.getArticle(this.id).subscribe((article) => {
-        this.article = { ...article };
+        Object.assign(this.article, article);
+        this.cdr.detectChanges(); // force UI update
       });
     }
   }
 
   saveArticle(): void {
-    console.log('Saving:', this.article);
-    this.newsService.updateArticle(this.article).subscribe((event) => {
-      console.log('Updated:', event);
-      this.router.navigate(["/category/all"]);
+    this.newsService.updateArticle(this.article).subscribe(() => {
+      this.router.navigate(['/category/all']);
     });
   }
-  
+
   fileChangeEvent(fileInput: any) {
     this.imageError = null;
     if (fileInput.target.files && fileInput.target.files[0]) {
-      // Size Filter Bytes
       const MAX_SIZE = 20971520;
       const ALLOWED_TYPES = ['image/png', 'image/jpeg'];
 
       if (fileInput.target.files[0].size > MAX_SIZE) {
-        this.imageError =
-          'Maximum size allowed is ' + MAX_SIZE / 1000 + 'Mb';
+        this.imageError = 'Maximum size allowed is ' + MAX_SIZE / 1000 + 'Mb';
         return false;
       }
       if (!_.includes(ALLOWED_TYPES, fileInput.target.files[0].type)) {
         this.imageError = 'Only Images are allowed ( JPG | PNG )';
         return false;
       }
+
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        const image = new Image();
+         const image = new Image();
         image.src = e.target.result;
         image.onload = rs => {
           const imgBase64Path = e.target.result;
@@ -89,5 +88,5 @@ export class ArticleEdit {
     }
     return true;
   }
-
 }
+

@@ -1,33 +1,40 @@
 <div class="news d-flex flex-column" *ngIf="news$ | async as news">
-   <div class="mb-4 justify-content-end d-flex">
+  <div class="mb-4 justify-content-end d-flex align-items-center">
     <label>
-     Search:
-      <input type="text" [(ngModel)]="searchTerm">
+      Search:
+      <input type="text" [(ngModel)]="searchTerm" />
     </label>
+    <a
+      *ngIf="loginService.isLogged()"
+      class="btn btn-primary"
+      style="margin-left: 5px"
+      routerLink="/new"
+      >Create article</a
+    >
   </div>
   <div class="news-container">
-     <div class="news-card" *ngFor="let card of (news | filterArticles: searchTerm)">
-    <div class="card">
-      <img
-        [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
-        class="card-img-top"
-        alt="{{ card.title }}"
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{ card.title }}</h5>
-        <p class="card-text text-muted">{{ card.category }}</p>
-        <div class="more">
-            <a [routerLink]="['/article', card.id]">more...</a>
+    <div class="news-card" *ngFor="let card of news | filterArticles : searchTerm">
+      <div class="card">
+        <img
+          [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
+          class="card-img-top"
+          alt="{{ card.title }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ card.title }}</h5>
+          <p class="card-text text-muted">{{ card.category }}</p>
+          <div class="more">
+            <a [routerLink]="['/article', card.id]">See more...</a>
+          </div>
         </div>
-      </div>
-      <div class="card-footer">
-        <div [innerHTML]="card.abstract | safeHtml"></div>
-        <div *ngIf="loginService.isLogged()">
-          <button [routerLink]="['/edit', card.id]">Edit</button><button>Remove</button>
+        <div class="card-footer">
+          <div [innerHTML]="card.abstract | safeHtml"></div>
+          <div *ngIf="loginService.isLogged()" class="mt-2">
+            <button [routerLink]="['/edit', card.id]" class="btn  btn-outline-primary me-2">Edit</button>
+            <button class="btn  btn-outline-success">Remove</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
- 
 </div>
