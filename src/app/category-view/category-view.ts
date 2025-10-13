@@ -1,71 +1,64 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { map, BehaviorSubject, startWith, combineLatest, debounceTime } from 'rxjs';
+import { map, switchMap, startWith, combineLatest, BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { News } from '../services/news';
 import { Article } from '../interfaces/article';
 import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
 import { LoginService } from '../services/login-service';
-
+import { FilterArticlesPipe } from '../pipes/filter-text-pipe';
 @Component({
   selector: 'app-category-view',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, SafeHtmlPipe, FormsModule, FilterArticlesPipe],
   templateUrl: './category-view.html',
   styleUrls: ['./category-view.css'],
 })
-
 export class CategoryView {
   private route = inject(ActivatedRoute);
   private newsService = inject(News);
   public loginService = inject(LoginService);
   searchTerm: string = '';
-  search$ = new BehaviorSubject<string>('');             // ⬅️ neu
-
 
   constructor() {
     this.newsService.setAnonymousApiKey();
-    this.category$.subscribe(() => {
-      this.searchTerm = '';
-      // this.search$.next('');
-    });
+    // this.category$.subscribe(() => {
+    //   this.searchTerm = '';
+    // });
   }
 
-  onSearchChange(value: string) {
-    this.search$.next(value);
-    console.log("works")
-  }
+  // loggedIn$ = this.loginService.user$.pipe(map((user) => !!user));
 
   private category$ = this.route.paramMap.pipe(
     map((params) => params.get('id')?.toLowerCase() ?? 'all'),
     startWith('all')
   );
-
   private reload$ = new BehaviorSubject<void>(undefined);
 
   news$: Observable<Article[]> = combineLatest([
     this.category$,
     this.newsService.getArticles().pipe(startWith([] as Article[])),
-    this.search$.pipe(startWith(''), debounceTime(20), map(s => s.trim().toLowerCase()))
   ]).pipe(
-    map(([category, articles, q]) => {
-      let list = category === 'all'
+    map(([category, articles]) => {
+    const filtered =
+      category === 'all'
         ? articles
-        : articles.filter(a => a.category?.toLowerCase() === category);
+        : articles.filter((a) => a.category?.toLowerCase() === category);
 
-      if (!q) return list;
+    // Log all fields except `thumbnail_image`
+    const test: { id: number; id_user: number; abstract: string; subtitle: string; update_date: string; category: string; title: string; thumbnail_media_type: string; image_data?: string; image_media_type?: string; body: string; }[] = []
+    filtered.forEach(({ thumbnail_image, ...rest }) =>
 
-      return list.filter(a => {
-        const t = (a.title ?? '').toLowerCase();
-        const s = (a.subtitle ?? '').toLowerCase();
-        const ab = (a.abstract ?? '').toLowerCase();
-        return t.includes(q) || s.includes(q) || ab.includes(q);
-      });
-    })
+     test.push(rest)
+    );
+    console.log(test);
+    
+
+    return filtered;
+  })
   );
-
   toDelete?: Article;
   deletedIds$ = new BehaviorSubject<Set<number>>(new Set());
 
@@ -84,7 +77,7 @@ export class CategoryView {
         nextSet.add(numericId);
         this.deletedIds$.next(nextSet);
         this.reload$.next();
-        console.log("works");
+        console.log('works');
       },
       error: (err) => console.error('Delete failed', err),
     });
