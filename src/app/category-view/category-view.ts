@@ -42,22 +42,13 @@ export class CategoryView {
     this.newsService.getArticles().pipe(startWith([] as Article[])),
   ]).pipe(
     map(([category, articles]) => {
-    const filtered =
-      category === 'all'
-        ? articles
-        : articles.filter((a) => a.category?.toLowerCase() === category);
+      const filtered =
+        category === 'all'
+          ? articles
+          : articles.filter((a) => a.category?.toLowerCase() === category);
 
-    // Log all fields except `thumbnail_image`
-    const test: { id: number; id_user: number; abstract: string; subtitle: string; update_date: string; category: string; title: string; thumbnail_media_type: string; image_data?: string; image_media_type?: string; body: string; }[] = []
-    filtered.forEach(({ thumbnail_image, ...rest }) =>
-
-     test.push(rest)
-    );
-    console.log(test);
-    
-
-    return filtered;
-  })
+      return filtered;
+    })
   );
   toDelete?: Article;
   deletedIds$ = new BehaviorSubject<Set<number>>(new Set());
@@ -77,7 +68,6 @@ export class CategoryView {
         nextSet.add(numericId);
         this.deletedIds$.next(nextSet);
         this.reload$.next();
-        console.log('works');
       },
       error: (err) => console.error('Delete failed', err),
     });
