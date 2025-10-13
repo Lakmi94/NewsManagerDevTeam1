@@ -19,20 +19,30 @@
     <!-- Card generation -->
     <div class="card" *ngFor="let card of news | filterArticles : searchTerm">
       <!-- Card Image area -->
-      <div class="media-wrap">
+      <div *ngIf="card.thumbnail_image && card.thumbnail_media_type">
+        <div class="media-wrap">
+          <img
+            class="card-img-top"
+            [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
+            [alt]="card.title || 'News image'"
+            [routerLink]="['/article', card.id]"
+          />
+          <span class="badge-cat">{{ card.category | titlecase }}</span>
+        </div>
+      </div>
+      <div *ngIf="!card.thumbnail_image || !card.thumbnail_media_type" class="no-media-wrap">
         <img
-
-          class="card-img-top"
-          [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
-          [alt]="card.title || 'News image'"
+          class="default-img-top"
+          src="../../assets/images/news-default-big.png"
           [routerLink]="['/article', card.id]"
         />
-        <span class="badge-cat">{{ card.category | titlecase }}</span>
       </div>
 
       <!-- Content of card -->
-      <div class="card-body ">
-        <h5 class="card-title text-center" [routerLink]="['/article', card.id]">{{ card.title }}</h5>
+      <div class="card-body">
+        <h5 class="card-title text-center" [routerLink]="['/article', card.id]">
+          {{ card.title }}
+        </h5>
         <div>
           <div class="card-subtitle text-center">{{ card.subtitle }}</div>
 
@@ -40,7 +50,6 @@
         </div>
 
         <!-- For optics -->
-       
 
         <!-- If logged in -->
         <div *ngIf="loginService.isLogged()" class="logged-in-edit">

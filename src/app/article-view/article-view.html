@@ -3,8 +3,13 @@
   <h3>{{ article.subtitle }}</h3>
   <div class="category">{{ article.category }}</div>
   <div>Last updated on: {{article.update_date}} by user {{article.id_user}}</div>
-  <img
+  
+  <img *ngIf="article.image_media_type && article.image_data"
     [src]="'data:' + article.image_media_type + ';base64,' + article.image_data"
+    class="card-img-top"
+  />
+   <img *ngIf="!article.image_media_type || !article.image_data"
+    src="../../assets/images/news-default-big.png"
     class="card-img-top"
   />
   <div *ngIf="article.body" [innerHTML]="article.body | safeHtml"></div>
