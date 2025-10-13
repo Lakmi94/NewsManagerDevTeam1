@@ -1,12 +1,13 @@
 <div *ngIf="article$ | async as article" class="article-container">
   <h2 class="fw-bold">{{ article.title }}</h2>
-  <div>{{ article.subtitle }}</div>
-  <div>{{ article.category }}</div>
+  <h3>{{ article.subtitle }}</h3>
+  <div class="category">{{ article.category }}</div>
+  <div>Last updated on: {{article.update_date}} by user {{article.id_user}}</div>
   <img
     [src]="'data:' + article.image_media_type + ';base64,' + article.image_data"
     class="card-img-top"
   />
   <div *ngIf="article.body" [innerHTML]="article.body | safeHtml"></div>
-  <div>{{article.update_date}} by user {{article.id_user}}</div>
-  <a class="btn btn-primary" routerLink="/category/all">Back</a>
+  
+  <a class="btn back-button mt-4" routerLink="/category/all">Back</a>
 </div>

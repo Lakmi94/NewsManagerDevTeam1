@@ -1,5 +1,5 @@
 .news {
-  padding: 5%;
+  padding: 10% 5%;
   background-color: var(--color-bg);
 }
 
@@ -19,6 +19,9 @@
   width: 100%;
   height: auto;
   object-fit: cover;
+}
+.card-img-top:hover{
+  cursor: pointer;
 }
 
 .badge-cat {
@@ -47,8 +50,21 @@
   text-decoration: none;
 }
 
-.more a:hover {
+.card-title {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.card-title:hover {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+
+.card-subtitle {
+
+  font-weight: bold;
+  margin: 5px
 }
 
 .card {
@@ -63,12 +79,11 @@
     background-color: var(--color-surface);
 }
 
-.card-body .card-title:hover{
-  text-decoration: underline;
-}
+
 
 .logged-in-edit{
   position: right;
+  margin-top: 20px;
 }
 
 .card-text.clamp-3 {
@@ -88,4 +103,8 @@
 
 .search-input {
   height: 38px;
+}
+
+.btn-create{ 
+  background: var(--color-primary);
 }

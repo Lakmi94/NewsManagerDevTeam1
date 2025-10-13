@@ -43,6 +43,10 @@
   height: 60px;
 }
 
+.logo:hover{
+  cursor: pointer;
+}
+
 .login {
   border: 1px solid #1c352d;
 }
