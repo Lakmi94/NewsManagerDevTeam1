@@ -26,8 +26,7 @@
 				<h5 class="card-title" [routerLink]="['/article', card.id]">{{ card.title }}</h5>
 				<div class="card-text">
 					<p>{{ card.subtitle }}</p>
-					<!-- removed since the task says elsewise -->
-					<!-- <div [innerHTML]="card.abstract | safeHtml"></div> -->
+					<div class="abstract-text" [innerHTML]="card.abstract | safeHtml"></div>
 				</div>
 
 				<!-- For optics -->
@@ -39,17 +38,23 @@
 				<div *ngIf="loginService.isLogged()" class="logged-in-edit">
 					<button type="button" class="btn  btn-outline-success me-2"
 						[routerLink]="['/edit', card.id]">Edit</button>
-					<button type="button" class="btn  btn-outline-danger" data-bs-toggle="modal"
-						data-bs-target="#modal">Remove</button>
+					<button type="button"
+          class="btn btn-outline-danger"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#modal-' + card.id">Remove</button>
 				</div>
 
 
 				<!-- Modal -->
-				<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+				<div class="modal fade"
+     [id]="'modal-' + card.id"
+     tabindex="-1"
+     [attr.aria-labelledby]="'modalLabel-' + card.id"
+     aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="modalLabel">Do you really want to delete this article?
+								<h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">Do you really want to delete this article?
 								</h1>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
@@ -59,7 +64,7 @@
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-								<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete(card.id)">Yes,
+								<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete_news(card)">Yes,
 									delete</button>
 							</div>
 						</div>

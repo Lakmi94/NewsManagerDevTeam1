@@ -71,7 +71,8 @@
   position: right;
 }
 
-.card-text.clamp-3 {
+.card-text .abstract-text,
+.card-text .clamp-3 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
