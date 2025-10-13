@@ -14,7 +14,7 @@
   width: 100%;
   margin-bottom: 1rem;
 }
-.card-img-top:hover{
+.card-img-top:hover {
   cursor: pointer;
 }
 
@@ -24,7 +24,8 @@
 
 .card-body {
   position: relative;
-  padding-bottom: 2rem; }
+  padding-bottom: 2rem;
+}
 
 .more {
   position: absolute;
@@ -47,11 +48,9 @@
   cursor: pointer;
 }
 
-
 .card-subtitle {
-
   font-weight: bold;
-  margin: 5px
+  margin: 5px;
 }
 
 .card {
@@ -63,12 +62,10 @@
 
 .card-footer {
   margin-top: auto;
-    background-color: var(--color-surface);
+  background-color: var(--color-surface);
 }
 
-
-
-.logged-in-edit{
+.logged-in-edit {
   position: right;
   margin-top: 20px;
 }
@@ -93,6 +90,6 @@
   height: 38px;
 }
 
-.btn-create{ 
+.btn-create {
   background: var(--color-primary);
 }

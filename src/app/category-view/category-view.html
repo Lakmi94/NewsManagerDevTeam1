@@ -9,6 +9,7 @@
 			article</a>
 	</div>
 
+<<<<<<< HEAD
 	<!-- News area -->
 	<div class="news-grid">
 		<!-- Card generation -->
@@ -33,6 +34,40 @@
 				<div class="more">
 					<a [routerLink]="['/article', card.id]">more...</a>
 				</div>
+=======
+  <!-- News area -->
+  <div class="news-grid">
+    <!-- Card generation -->
+    <div class="card" *ngFor="let card of news | filterArticles : searchTerm">
+      <!-- Card Image area -->
+      <div *ngIf="card.thumbnail_image && card.thumbnail_media_type">
+        <div class="media-wrap">
+          <img
+            class="card-img-top"
+            [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
+            [alt]="card.title || 'News image'"
+            [routerLink]="['/article', card.id]"
+          />
+          <span class="badge-cat">{{ card.category | titlecase }}</span>
+          	<p>{{ card.subtitle }}</p>
+        </div>
+      </div>
+      <div *ngIf="!card.thumbnail_image || !card.thumbnail_media_type" class="no-media-wrap">
+        <img
+          class="default-img-top"
+          src="../../assets/images/news-default-big.png"
+          [routerLink]="['/article', card.id]"
+        />
+      </div>
+
+      <!-- Content of card -->
+      <div class="card-body">
+        <h5 class="card-title text-center" [routerLink]="['/article', card.id]">
+          {{ card.title }}
+        </h5>
+        <div>
+          <div class="card-subtitle text-center">{{ card.subtitle }}</div>
+>>>>>>> origin/master
 
 				<!-- If logged in -->
 				<div *ngIf="loginService.isLogged()" class="logged-in-edit">
@@ -44,6 +79,10 @@
           [attr.data-bs-target]="'#modal-' + card.id">Remove</button>
 				</div>
 
+<<<<<<< HEAD
+=======
+        <!-- For optics -->
+>>>>>>> origin/master
 
 				<!-- Modal -->
 				<div class="modal fade"
