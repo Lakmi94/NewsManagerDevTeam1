@@ -45,6 +45,8 @@ export class ArticleEdit implements OnInit {
         Object.assign(this.article, article);
         this.cdr.detectChanges(); // force UI update
       });
+    } else {
+      this.article.id = undefined as any;
     }
   }
 

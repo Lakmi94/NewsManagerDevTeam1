@@ -28,6 +28,7 @@
             [routerLink]="['/article', card.id]"
           />
           <span class="badge-cat">{{ card.category | titlecase }}</span>
+          	<p>{{ card.subtitle }}</p>
         </div>
       </div>
       <div *ngIf="!card.thumbnail_image || !card.thumbnail_media_type" class="no-media-wrap">
@@ -46,67 +47,47 @@
         <div>
           <div class="card-subtitle text-center">{{ card.subtitle }}</div>
 
-          <div class="card-text text-center" [innerHTML]="card.abstract | safeHtml"></div>
-        </div>
+				<!-- If logged in -->
+				<div *ngIf="loginService.isLogged()" class="logged-in-edit">
+					<button type="button" class="btn  btn-outline-success me-2"
+						[routerLink]="['/edit', card.id]">Edit</button>
+					<button type="button"
+          class="btn btn-outline-danger"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#modal-' + card.id">Remove</button>
+				</div>
 
         <!-- For optics -->
 
-        <!-- If logged in -->
-        <div *ngIf="loginService.isLogged()" class="logged-in-edit">
-          <button
-            type="button"
-            class="btn btn-outline-success me-2"
-            [routerLink]="['/edit', card.id]"
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#modal"
-          >
-            Remove
-          </button>
-        </div>
-
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="modal"
-          tabindex="-1"
-          aria-labelledby="modalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel">
-                  Do you really want to delete this article?
-                </h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                If you are removing this article, it cannot be retrieved!
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                  Cancel
-                </button>
-                <button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete(card.id)">
-                  Yes, delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-footer">Updated: {{ getTimeAgo(card.update_date) }}</div>
-    </div>
-  </div>
+				<!-- Modal -->
+				<div class="modal fade"
+     [id]="'modal-' + card.id"
+     tabindex="-1"
+     [attr.aria-labelledby]="'modalLabel-' + card.id"
+     aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">Do you really want to delete this article?
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
+									aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								If you are removing this article, it cannot be retrieved!
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+								<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete_news(card)">Yes,
+									delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				Updated: {{ getTimeAgo(card.update_date) }}
+			</div>
+		</div>
+	</div>
 </div>
