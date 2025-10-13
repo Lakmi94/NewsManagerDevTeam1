@@ -85,3 +85,7 @@
   overflow-y: auto;
   background: var(--color-bg);
 }
+
+.search-input {
+  height: 38px;
+}
