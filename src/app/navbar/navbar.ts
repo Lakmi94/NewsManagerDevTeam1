@@ -12,27 +12,22 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-
 export class Navbar {
   user: User = { username: '', password: '' };
   loggedIn: boolean = false;
-  constructor(public loginService: LoginService) { }
+ constructor(public loginService: LoginService) {}
 
   @ViewChild('loginForm') loginForm: any;
 
   login(user: User, form: NgForm): void {
-    this.loginService.login(user.username, user.password).subscribe(success => {
-      if (success) {
-        const name = user.username;
-        form.setValue({ username: name, password: '' });
-      } else {
+    this.loginService.login(user.username, user.password).subscribe(event => {
+      if (!this.loginService.isLogged()) {
         window.alert("Username or Password incorrect");
         form.resetForm({ username: '', password: '' });
       }
     });
   }
-
-  logout(form: NgForm): void {
+  logout(form: NgForm):void{
     this.user = { username: '', password: '' };
     this.loginService.logout();
     form.resetForm({ username: '', password: '' });

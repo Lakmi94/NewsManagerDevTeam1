@@ -3,36 +3,23 @@
   background-color: var(--color-bg);
 }
 
-.news-grid {
+.news-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  align-items: start;
 }
 
-.media-wrap {
-  position: relative;
-  overflow: hidden;
-}
-
-.card-img-top {
+.news-card {
+  display: inline-block;
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  margin-bottom: 1rem;
 }
 .card-img-top:hover{
   cursor: pointer;
 }
 
-.badge-cat {
-  position: absolute;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
+.news-card:nth-child(3n) {
+  margin-right: 0;
 }
 
 .card-body {
