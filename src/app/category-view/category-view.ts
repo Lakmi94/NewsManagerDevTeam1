@@ -12,7 +12,7 @@ import { FilterArticlesPipe } from '../pipes/filter-text-pipe';
 @Component({
 	selector: 'app-category-view',
 	standalone: true,
-	imports: [CommonModule, RouterLink, FormsModule, SafeHtmlPipe],
+	imports: [CommonModule, RouterLink, FormsModule, SafeHtmlPipe,FilterArticlesPipe],
 	templateUrl: './category-view.html',
 	styleUrls: ['./category-view.css'],
 })
@@ -26,16 +26,16 @@ export class CategoryView {
 
 	constructor() {
 		this.newsService.setAnonymousApiKey();
-		this.category$.subscribe(() => {
-			this.searchTerm = '';
-			// this.search$.next('');
-		});
+		// this.category$.subscribe(() => {
+		// 	this.searchTerm = '';
+		// 	// this.search$.next('');
+		// });
 	}
 
-	onSearchChange(value: string) {
-		this.search$.next(value);
-		console.log("works_search")
-	}
+	// onSearchChange(value: string) {
+	// 	this.search$.next(value);
+	// 	console.log("works_search")
+	// }
 
 	private category$ = this.route.paramMap.pipe(
 		map((params) => params.get('id')?.toLowerCase() ?? 'all'),
