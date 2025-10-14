@@ -1,8 +1,15 @@
-.card{
-    margin: 2%;
+.card {
+  margin: 2%;
 }
 
 .form-floating,
-.form-group{
-    margin: 3%;
+.form-group {
+  margin: 3%;
+}
+
+button.save-btn:disabled,
+button.save-btn[disabled] {
+  cursor:not-allowed;
+ 
+
 }
