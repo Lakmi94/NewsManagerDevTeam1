@@ -1,75 +1,108 @@
 <div class="news d-flex flex-column" *ngIf="news$ | async as news">
-	<div class="mb-4 justify-content-end d-flex">
-		<form class="d-flex" role="search">
-			<input class="form-control me-2" type="search" placeholder="Search" [(ngModel)]="searchTerm"
-				(ngModelChange)="onSearchChange($event)" name="searchTerm" />
-		</form>
+  <div class="mb-4 justify-content-end d-flex">
+    <label>
+      Search:
+      <input type="text" [(ngModel)]="searchTerm" class="search-input" />
+    </label>
 
-		<a *ngIf="loginService.isLogged()" class="btn btn-primary" style="margin-left: 5px" routerLink="/new">Create
-			article</a>
-	</div>
+    <a
+      *ngIf="loginService.isLogged()"
+      class="btn btn-create"
+      style="margin-left: 5px"
+      routerLink="/new"
+      >Create article</a
+    >
+  </div>
 
-	<!-- News area -->
-	<div class="news-grid">
-		<!-- Card generation -->
-		<div class="card" *ngFor="let card of news">
-			<!-- Card Image area -->
-			<div class="media-wrap">
-				<img class="card-img-top"
-					[src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
-					[alt]="card.title || 'News image'" [routerLink]="['/article', card.id]" />
-				<span class="badge-cat">{{ card.category | titlecase }}</span>
-			</div>
+  <!-- News area -->
+  <div class="news-grid">
+    <!-- Card generation -->
+    <div class="card" *ngFor="let card of news | filterArticles : searchTerm">
+      <!-- Card Image area -->
+      <div *ngIf="card.thumbnail_image && card.thumbnail_media_type">
+        <div class="media-wrap">
+          <img
+            class="card-img-top"
+            [src]="'data:' + card.thumbnail_media_type + ';base64,' + card.thumbnail_image"
+            [alt]="card.title || 'News image'"
+            [routerLink]="['/article', card.id]"
+          />
+          <span class="badge-cat">{{ card.category | titlecase }}</span>
+        </div>
+      </div>
+      <div *ngIf="!card.thumbnail_image || !card.thumbnail_media_type" class="no-media-wrap">
+        <img
+          class="default-img-top"
+          src="../../assets/images/news-default-big.png"
+          [routerLink]="['/article', card.id]"
+        />
+      </div>
 
-			<!-- Content of card -->
-			<div class="card-body">
-				<h5 class="card-title" [routerLink]="['/article', card.id]">{{ card.title }}</h5>
-				<div class="card-text">
-					<p>{{ card.subtitle }}</p>
-					<div class="abstract-text" [innerHTML]="card.abstract | safeHtml"></div>
-				</div>
+      <!-- Content of card -->
+      <div class="card-body">
+        <h5 class="card-title text-center" [routerLink]="['/article', card.id]">
+          {{ card.title }}
+        </h5>
+        <div>
+          <div class="card-subtitle text-center">{{ card.subtitle }}</div>
 
-				<!-- For optics -->
-				<div class="more">
-					<a [routerLink]="['/article', card.id]">more...</a>
-				</div>
+          <div class="card-text text-center" [innerHTML]="card.abstract | safeHtml"></div>
+        </div>
 
-				<!-- If logged in -->
-				<div *ngIf="loginService.isLogged()" class="logged-in-edit">
-					<button type="button" class="btn  btn-outline-success me-2"
-						[routerLink]="['/edit', card.id]">Edit</button>
-					<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-						[attr.data-bs-target]="'#modal-' + card.id">Remove</button>
-				</div>
+        <!-- For optics -->
 
+        <!-- If logged in -->
+        <div *ngIf="loginService.isLogged()" class="logged-in-edit">
+          <button
+            type="button"
+            class="btn btn-outline-success me-2"
+            [routerLink]="['/edit', card.id]"
+          >
+            Edit
+          </button>
+         	<button type="button"
+          class="btn btn-outline-danger"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#modal-' + card.id">Remove</button>
+        </div>
 
-				<!-- Modal -->
-				<div class="modal fade" [id]="'modal-' + card.id" tabindex="-1"
-					[attr.aria-labelledby]="'modalLabel-' + card.id" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">Do you really want to delete
-									this article?
-								</h1>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
-									aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								If you are removing this article, it cannot be retrieved!
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-								<button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete_news(card)">Yes,
-									delete</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="card-footer">
-				Updated: {{ getTimeAgo(card.update_date) }}
-			</div>
-		</div>
-	</div>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          [id]="'modal-' + card.id"
+          tabindex="-1"
+          [attr.aria-labelledby]="'modalLabel-' + card.id"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">
+                  Do you really want to delete this article?
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                If you are removing this article, it cannot be retrieved!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete_news(card)">
+                  Yes, delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">Updated: {{ getTimeAgo(card.update_date) }}</div>
+    </div>
+  </div>
 </div>
