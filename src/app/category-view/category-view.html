@@ -5,14 +5,9 @@
       <input type="text" [(ngModel)]="searchTerm" class="search-input" />
     </label>
 
-    <a
-      *ngIf="loginService.isLogged()"
-      class="btn btn-create"
-      style="margin-left: 5px"
-      routerLink="/new"
-      >Create article</a
-    >
-  </div>
+		<a *ngIf="loginService.isLogged()" class="btn btn-primary" style="margin-left: 5px" routerLink="/new">Create
+			article</a>
+	</div>
 
   <!-- News area -->
   <div class="news-grid" *ngIf="news$ | async as news">

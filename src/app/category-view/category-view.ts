@@ -8,7 +8,7 @@ import { News } from '../services/news';
 import { Article } from '../interfaces/article';
 import { SafeHtmlPipe } from '../pipes/safe-html-pipe';
 import { LoginService } from '../services/login-service';
-import { FilterArticlesPipe } from '../pipes/filter-text-pipe';
+
 @Component({
 	selector: 'app-category-view',
 	standalone: true,
@@ -16,6 +16,7 @@ import { FilterArticlesPipe } from '../pipes/filter-text-pipe';
 	templateUrl: './category-view.html',
 	styleUrls: ['./category-view.css'],
 })
+
 export class CategoryView {
 	private route = inject(ActivatedRoute);
 	private newsService = inject(News);
