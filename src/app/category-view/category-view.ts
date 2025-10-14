@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { map, switchMap, startWith, combineLatest, BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, debounceTime } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { News } from '../services/news';
 import { Article } from '../interfaces/article';
@@ -29,6 +29,13 @@ export class CategoryView {
 		// });
 	}
 
+	search$ = new BehaviorSubject<string>('');
+
+	onSearchChange(value: string) {
+		this.search$.next(value);
+		console.log("works_search")
+	}
+
 	private category$ = this.route.paramMap.pipe(
 		map((params) => params.get('id')?.toLowerCase() ?? 'all'),
 		startWith('all')
@@ -36,17 +43,31 @@ export class CategoryView {
 
 	private reload$ = new BehaviorSubject<void>(undefined);
 
+	private articles$ = this.reload$.pipe(
+		debounceTime(0),
+		switchMap(() => this.newsService.getArticles().pipe(
+			startWith([] as Article[])
+		))
+	);
+
 	news$: Observable<Article[]> = combineLatest([
 		this.category$,
-		this.newsService.getArticles().pipe(startWith([] as Article[])),
+		this.articles$,
+		this.search$.pipe(debounceTime(200), map(s => s.trim().toLowerCase()))
 	]).pipe(
-		map(([category, articles]) => {
-			const filtered =
-				category === 'all'
-					? articles
-					: articles.filter((a) => a.category?.toLowerCase() === category);
+		map(([category, articles, q]) => {
+			let list = category === 'all'
+				? articles
+				: articles.filter(a => a.category?.toLowerCase() === category);
 
-			return filtered;
+			if (!q) return list;
+
+			return list.filter(a => {
+				const t = (a.title ?? '').toLowerCase();
+				const s = (a.subtitle ?? '').toLowerCase();
+				const ab = (a.abstract ?? '').toLowerCase();
+				return t.includes(q) || s.includes(q) || ab.includes(q);
+			});
 		})
 	);
 
@@ -60,6 +81,7 @@ export class CategoryView {
 				},
 				error: (err) => console.error('Delete failed', err),
 			});
+			window.alert("The article " + article.title + " was successfully deleted!")
 		}
 	}
 
