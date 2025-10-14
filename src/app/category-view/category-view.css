@@ -1,95 +1,67 @@
-.news {
-  padding: 10% 5%;
-  background-color: var(--color-bg);
+.navbar {
+  background-color: var(--color-primary) !important;
 }
 
-.news-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+/* .navbar .nav-link {
+  color: var(--color-text) !important;
+} */
+
+.navbar a,
+.navbar .nav-link,
+.navbar .navbar-brand {
+  /* color: var(--color-quaternary) ; */
+  color: #222e06;
 }
 
-.news-card {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 1rem;
+.navbar a:hover,
+.navbar .nav-link:hover {
+  color: var(--color-secondary);
+  /* border-bottom: 2px solid var(--color-secondary); */
 }
-.card-img-top:hover {
+
+.active-link {
+  border-bottom: 2px solid #222e06;
+  font-weight: bold;
+    
+  /* background-color: #0d6efd !important;
+  border-radius: 6px; */
+}
+.active-link:hover {
+  border-bottom: 2px solid var(--color-secondary);
+
+}
+
+.navbar-toggler-icon {
+  color: var(--color-navbar-text) !important;
+}
+
+.btn {
+  /* border-color: var(--color-navbar-text); */
+}
+
+.logo {
+  height: 60px;
+}
+
+.logo:hover{
   cursor: pointer;
 }
 
-.news-card:nth-child(3n) {
-  margin-right: 0;
+.login {
+  border: 1px solid #1c352d;
 }
 
-.card-body {
-  position: relative;
-  padding-bottom: 2rem;
+.login:hover {
+  background: #1c352d;
+  color: white;
 }
 
-.more {
-  position: absolute;
-  right: 0.5rem;
-  font-weight: 500;
+.logout {
+  border: 1px solid var(--color-quaternary);
+  color: var(--color-quaternary)
 }
 
-.more a {
-  color: #0d6efd;
-  text-decoration: none;
-}
-
-.card-title {
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.card-title:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.card-subtitle {
-  font-weight: bold;
-  margin: 5px;
-}
-
-.card {
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-surface);
-}
-
-.card-footer {
-  margin-top: auto;
-  background-color: var(--color-surface);
-}
-
-.logged-in-edit {
-  position: right;
-  margin: 20px 0px;
-}
-
-.card-text .abstract-text,
-.card-text .clamp-3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
-
-.card-content {
-  margin-top: 2%;
-  padding: 2%;
-  flex: 1;
-  overflow-y: auto;
-  background: var(--color-bg);
-}
-
-.search-input {
-  height: 38px;
-}
-
-.btn-create {
-  background: var(--color-primary);
+.logout:hover {
+  background: var(--color-quaternary);
+  color: white;
 }
