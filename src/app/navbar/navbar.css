@@ -9,14 +9,12 @@
 .navbar a,
 .navbar .nav-link,
 .navbar .navbar-brand {
-  /* color: var(--color-quaternary) ; */
   color: #222e06;
 }
 
 .navbar a:hover,
 .navbar .nav-link:hover {
-  color: var(--color-secondary);
-  /* border-bottom: 2px solid var(--color-secondary); */
+  color:  var(--color-secondary);
 }
 
 .active-link {

@@ -1,15 +1,16 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-	<div class="d-flex flex-row align-items-center">
-		<img src="assets/images/UPM_logo.png" class="logo" [routerLink]="['/category', 'all']"/>
-    <div class="navbar-brand mt-0.5" href="#">UPM News</div>
+    <div class="d-flex flex-row align-items-center">
+      <img src="assets/images/UPM_logo.png" class="logo" [routerLink]="['/category', 'all']" />
+      <div class="navbar-brand mt-0.5" href="#">UPM News</div>
+   
+    <a class="navbar-brand" href="#">UPM News</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
             class="nav-link"
             routerLinkActive="active-link"
-           
             aria-current="page"
             [routerLink]="['/category', 'all']"
             >All</a
@@ -52,7 +53,6 @@
       </ul>
     </div>
 	</div>
-	
     <div>
       <form
         *ngIf="!loginService.isLogged()"

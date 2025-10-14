@@ -1,16 +1,21 @@
-<div class="news d-flex flex-column">
+<div class="news d-flex flex-column" *ngIf="news$ | async as news">
   <div class="mb-4 justify-content-end d-flex">
     <label>
       Search:
       <input type="text" [(ngModel)]="searchTerm" class="search-input" />
     </label>
 
-		<a *ngIf="loginService.isLogged()" class="btn btn-primary" style="margin-left: 5px" routerLink="/new">Create
-			article</a>
-	</div>
+    <a
+      *ngIf="loginService.isLogged()"
+      class="btn btn-create"
+      style="margin-left: 5px"
+      routerLink="/new"
+      >Create article</a
+    >
+  </div>
 
   <!-- News area -->
-  <div class="news-grid" *ngIf="news$ | async as news">
+  <div class="news-grid">
     <!-- Card generation -->
     <div class="card" *ngFor="let card of news | filterArticles : searchTerm">
       <!-- Card Image area -->
@@ -32,7 +37,7 @@
           [routerLink]="['/article', card.id]"
         />
       </div>
-    
+
       <!-- Content of card -->
       <div class="card-body">
         <h5 class="card-title text-center" [routerLink]="['/article', card.id]">
@@ -40,73 +45,64 @@
         </h5>
         <div>
           <div class="card-subtitle text-center">{{ card.subtitle }}</div>
-           <div class="card-text text-center" [innerHTML]="card.abstract | safeHtml"></div>
 
-          <!-- If logged in -->
-          <div *ngIf="loginService.isLogged()" class="logged-in-edit">
-            <button
-              type="button"
-              class="btn btn-outline-success me-2"
-              [routerLink]="['/edit', card.id]"
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              data-bs-toggle="modal"
-              [attr.data-bs-target]="'#modal-' + card.id"
-            >
-              Remove
-            </button>
-          </div>
+          <div class="card-text text-center" [innerHTML]="card.abstract | safeHtml"></div>
+        </div>
 
-          <!-- For optics -->
+        <!-- For optics -->
 
-          <!-- Modal -->
-          <div
-            class="modal fade"
-            [id]="'modal-' + card.id"
-            tabindex="-1"
-            [attr.aria-labelledby]="'modalLabel-' + card.id"
-            aria-hidden="true"
+        <!-- If logged in -->
+        <div *ngIf="loginService.isLogged()" class="logged-in-edit">
+          <button
+            type="button"
+            class="btn btn-outline-success me-2"
+            [routerLink]="['/edit', card.id]"
           >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">
-                    Do you really want to delete this article?
-                  </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  If you are removing this article, it cannot be retrieved!
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                  <button
-                    class="btn btn-danger"
-                    data-bs-dismiss="modal"
-                    (click)="delete_news(card)"
-                  >
-                    Yes, delete
-                  </button>
-                </div>
+            Edit
+          </button>
+         	<button type="button"
+          class="btn btn-outline-danger"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#modal-' + card.id">Remove</button>
+        </div>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          [id]="'modal-' + card.id"
+          tabindex="-1"
+          [attr.aria-labelledby]="'modalLabel-' + card.id"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" [id]="'modalLabel-' + card.id">
+                  Do you really want to delete this article?
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                If you are removing this article, it cannot be retrieved!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button class="btn btn-danger" data-bs-dismiss="modal" (click)="delete_news(card)">
+                  Yes, delete
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div class="card-footer">Updated: {{ getTimeAgo(card.update_date) }}</div>
       </div>
+      <div class="card-footer">Updated: {{ getTimeAgo(card.update_date) }}</div>
     </div>
   </div>
-
-  
 </div>
