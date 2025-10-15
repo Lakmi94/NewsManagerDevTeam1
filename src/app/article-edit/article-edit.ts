@@ -28,6 +28,8 @@ export class ArticleEdit implements OnInit {
     body: '',
   };
 
+  tempImage:string= ''
+
   imageError: string | null = null;
   isImageSaved = false;
   cardImageBase64: string | null = null;
@@ -45,9 +47,13 @@ export class ArticleEdit implements OnInit {
     if (this.id != null) {
       this.newsService.getArticle(this.id).subscribe((article) => {
         Object.assign(this.article, article);
-        this.cdr.detectChanges(); // force UI update
+        this.cdr.detectChanges();
+          
       });
+       
       this.is_new_article = false;
+      this.tempImage = 'present'
+   
     } else {
       this.article.id = undefined as any;
       this.is_new_article = true;
