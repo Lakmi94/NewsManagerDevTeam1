@@ -34,6 +34,7 @@
           [routerLink]="['/article', card.id]"
           alt="default image of news article"
         />
+		<span class="badge-cat">{{ card.category | titlecase }}</span>
       </div>
 
 			<!-- Content of card -->
