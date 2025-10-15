@@ -69,3 +69,6 @@ The project follows the **CRUD pattern** (Create, Read, Update, Delete) and conn
   * Anonymous key for default access.
   * User key after login; restore anonymous key on logout.
 * For images: use base64 encoding and proper media type display.
+
+# Git MR Testing Area
+trying some stuff
