@@ -1,5 +1,5 @@
 .news {
-  padding: 5%;
+  padding: 10% 5%;
   background-color: var(--color-bg);
 }
 
@@ -95,12 +95,13 @@
   margin-top: 20px;
 }
 
-.card-text.clamp-3 {
+/* .card-text.clamp-3 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
-}
+  font-weight: normal !important;
+} */
 
 .card-content {
   margin-top: 2%;

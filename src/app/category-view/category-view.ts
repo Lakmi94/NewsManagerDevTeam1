@@ -29,12 +29,6 @@ export class CategoryView {
 		// });
 	}
 
-	search$ = new BehaviorSubject<string>('');
-
-	onSearchChange(value: string) {
-		this.search$.next(value);
-		console.log("works_search")
-	}
 
 	private category$ = this.route.paramMap.pipe(
 		map((params) => params.get('id')?.toLowerCase() ?? 'all'),
@@ -50,26 +44,20 @@ export class CategoryView {
 		))
 	);
 
-	news$: Observable<Article[]> = combineLatest([
-		this.category$,
-		this.articles$,
-		this.search$.pipe(debounceTime(200), map(s => s.trim().toLowerCase()))
-	]).pipe(
-		map(([category, articles, q]) => {
-			let list = category === 'all'
-				? articles
-				: articles.filter(a => a.category?.toLowerCase() === category);
+	
+  news$: Observable<Article[]> = combineLatest([
+    this.category$,
+    this.newsService.getArticles().pipe(startWith([] as Article[])),
+  ]).pipe(
+    map(([category, articles]) => {
+      const filtered =
+        category === 'all'
+          ? articles
+          : articles.filter((a) => a.category?.toLowerCase() === category);
 
-			if (!q) return list;
-
-			return list.filter(a => {
-				const t = (a.title ?? '').toLowerCase();
-				const s = (a.subtitle ?? '').toLowerCase();
-				const ab = (a.abstract ?? '').toLowerCase();
-				return t.includes(q) || s.includes(q) || ab.includes(q);
-			});
-		})
-	);
+      return filtered;
+    })
+  );
 
 	delete_news(article: Article) {
 		if (window.confirm("Do you really want to delete this article?")) {
