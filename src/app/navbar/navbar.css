@@ -1,5 +1,6 @@
 .navbar {
   background-color: var(--color-primary) !important;
+  height: 60px;
 }
 
 /* .navbar .nav-link {
