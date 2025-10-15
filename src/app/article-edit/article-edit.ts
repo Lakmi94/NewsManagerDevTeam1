@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { News } from '../services/news';
 import { ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
+import { LoginService } from '../services/login-service';
 
 @Component({
   selector: 'app-article-edit',
@@ -28,7 +29,7 @@ export class ArticleEdit implements OnInit {
     body: '',
   };
 
-  tempImage:string= ''
+  tempImage: string = '';
 
   imageError: string | null = null;
   isImageSaved = false;
@@ -38,6 +39,7 @@ export class ArticleEdit implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
+  public loginService = inject(LoginService);
 
   id = this.route.snapshot.paramMap.get('id');
 
@@ -48,12 +50,10 @@ export class ArticleEdit implements OnInit {
       this.newsService.getArticle(this.id).subscribe((article) => {
         Object.assign(this.article, article);
         this.cdr.detectChanges();
-          
       });
-       
+
       this.is_new_article = false;
-      this.tempImage = 'present'
-   
+      this.tempImage = 'present';
     } else {
       this.article.id = undefined as any;
       this.is_new_article = true;
@@ -61,14 +61,18 @@ export class ArticleEdit implements OnInit {
   }
 
   saveArticle(): void {
-    this.newsService.updateArticle(this.article).subscribe(() => {
-      this.router.navigate(['/category/all']);
+    this.newsService.updateArticle(this.article).subscribe((success) => {
+      if (success) {
+        if (this.is_new_article) {
+          window.alert('The article ' + this.article.title + ' was successfully created!');
+        } else {
+          window.alert('The article ' + this.article.title + ' was successfully updated!');
+        }
+        this.router.navigate(['/category/all']);
+      } else {
+        window.alert('Article creation failed');
+      }
     });
-    if(this.is_new_article){
-      window.alert("The article "+ this.article.title+" was successfully created!");
-    }else{
-      window.alert("The article "+ this.article.title+" was successfully updated!");
-    }
   }
 
   fileChangeEvent(fileInput: any) {
@@ -88,9 +92,9 @@ export class ArticleEdit implements OnInit {
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
-         const image = new Image();
+        const image = new Image();
         image.src = e.target.result;
-        image.onload = rs => {
+        image.onload = (rs) => {
           const imgBase64Path = e.target.result;
           this.cardImageBase64 = imgBase64Path;
           this.isImageSaved = true;
@@ -98,7 +102,6 @@ export class ArticleEdit implements OnInit {
           this.article.image_media_type = fileInput.target.files[0].type;
           const head = fileInput.target.files[0].type.length + 13;
           this.article.image_data = e.target.result.substring(head, e.target.result.length);
-
         };
       };
       reader.readAsDataURL(fileInput.target.files[0]);
@@ -106,4 +109,3 @@ export class ArticleEdit implements OnInit {
     return true;
   }
 }
-

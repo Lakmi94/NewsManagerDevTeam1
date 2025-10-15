@@ -1,6 +1,7 @@
 .news {
   padding: 7% 5%;
   background-color: var(--color-bg);
+  min-height: calc(100vh - 50px);
 }
 
 .news-grid {

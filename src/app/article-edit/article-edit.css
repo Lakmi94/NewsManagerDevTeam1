@@ -1,5 +1,4 @@
 .card {
-   
   margin: 7% 2%;
 }
 
@@ -10,7 +9,18 @@
 
 button.save-btn:disabled,
 button.save-btn[disabled] {
-  cursor:not-allowed;
- 
+  cursor: not-allowed;
+}
 
+.fw-bolder:after {
+  content: ' *';
+  color: red;
+}
+
+
+.no-user {
+  min-height: calc(100vh - 255px);
+  display: flex;
+  justify-content: center;
+  padding: 50px;
 }

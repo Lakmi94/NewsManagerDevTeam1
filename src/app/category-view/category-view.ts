@@ -24,10 +24,8 @@ export class CategoryView {
 
   searchTerm: string = '';
 
-
   private articlesSubject = new BehaviorSubject<Article[]>([]);
   private articles$ = this.articlesSubject.asObservable();
-
 
   private category$ = this.route.paramMap.pipe(
     map((params) => params.get('id')?.toLowerCase() ?? 'all'),
@@ -51,20 +49,14 @@ export class CategoryView {
     });
   }
 
-
   delete_news(article: Article) {
     if (window.confirm(`Are you sure you want to delete "${article.title}"?`)) {
       const scrollY = window.scrollY;
 
       this.newsService.deleteArticle(article).subscribe({
         next: () => {
-          // Remove deleted article locally
-          const updated = this.articlesSubject
-            .getValue()
-            .filter((a) => a.id !== article.id);
-
+          const updated = this.articlesSubject.getValue().filter((a) => a.id !== article.id);
           this.articlesSubject.next(updated);
-
           setTimeout(() => window.scrollTo({ top: scrollY }), 0);
           window.alert(`The article "${article.title}" was successfully deleted!`);
         },
@@ -72,7 +64,6 @@ export class CategoryView {
       });
     }
   }
-
 
   getTimeAgo(dateString: string | Date): string {
     if (!dateString) return '';

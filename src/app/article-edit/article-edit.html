@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-body">
+  <div *ngIf="loginService.isLogged()" class="card-body">
     <h1 class="card-title">{{ id == null ? 'Create New' : 'Edit' }} Article</h1>
 
     <form #articleContent="ngForm">
@@ -49,7 +49,7 @@
           <option value="Sports">Sports</option>
           <option value="Technology">Technology</option>
         </select>
-        <label for="floatingSelect">Select a Category</label>
+        <label for="floatingSelect" class="fw-bolder">Select a Category</label>
         <div *ngIf="!category.valid && !category.untouched" class="text-danger">
           Please enter an article category.
         </div>
@@ -71,7 +71,7 @@
       </div>
 
       <div class="form-group">
-        <p class="fw-bolder">Body:</p>
+        <p>Body:</p>
         <textarea class="form-control" [(ngModel)]="article.body" name="body" rows="10"></textarea>
       </div>
 
@@ -82,7 +82,7 @@
           class="form-control"
           type="file"
           id="formFile"
-        [required]="is_new_article"
+          [required]="is_new_article"
           (change)="fileChangeEvent($event)"
           name="image"
           [(ngModel)]="tempImage"
@@ -108,5 +108,9 @@
         </button>
       </div>
     </form>
+  </div>
+
+  <div *ngIf="!loginService.isLogged()" class="no-user">
+    <h3>Please login to create article</h3>
   </div>
 </div>
