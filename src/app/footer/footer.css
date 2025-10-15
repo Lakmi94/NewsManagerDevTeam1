@@ -2,6 +2,14 @@
     background-color: var(--color-primary);
     height: 50px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
+    padding: 0px 40px;
+  
+}
+
+.para {
+    margin: 0px;
+    color: var(--color-secondary);
 }
