@@ -111,6 +111,12 @@
   </div>
 
   <div *ngIf="!loginService.isLogged()" class="no-user">
-    <h3>Please login to create article</h3>
+    <h3>Please login to {{id == null ?'create': 'edit'}} article</h3>
+     <input
+          class="btn btn-outline-danger back"
+          type="reset"
+          value="Back"
+          [routerLink]="['/category/all']"
+        />
   </div>
 </div>

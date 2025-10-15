@@ -23,4 +23,10 @@ button.save-btn[disabled] {
   display: flex;
   justify-content: center;
   padding: 50px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.back {
+  width: 100px;
 }

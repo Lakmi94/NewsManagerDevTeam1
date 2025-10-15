@@ -11,6 +11,10 @@ All tasks are done in **groups of three**.
 
 ---
 
+## Github repository
+https://github.com/Lakmi94/NewsManagerDevTeam1
+
+
 ### 📘 Project Overview
 
 Develop a **News Manager Application** integrating three interfaces:
