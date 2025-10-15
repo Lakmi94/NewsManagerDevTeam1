@@ -39,14 +39,18 @@ export class ArticleEdit implements OnInit {
 
   id = this.route.snapshot.paramMap.get('id');
 
+  is_new_article = false;
+
   ngOnInit() {
     if (this.id != null) {
       this.newsService.getArticle(this.id).subscribe((article) => {
         Object.assign(this.article, article);
         this.cdr.detectChanges(); // force UI update
       });
+      this.is_new_article = false;
     } else {
       this.article.id = undefined as any;
+      this.is_new_article = true;
     }
   }
 
@@ -54,6 +58,11 @@ export class ArticleEdit implements OnInit {
     this.newsService.updateArticle(this.article).subscribe(() => {
       this.router.navigate(['/category/all']);
     });
+    if(this.is_new_article){
+      window.alert("The article "+ this.article.title+" was successfully created!");
+    }else{
+      window.alert("The article "+ this.article.title+" was successfully updated!");
+    }
   }
 
   fileChangeEvent(fileInput: any) {

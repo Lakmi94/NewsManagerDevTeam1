@@ -60,7 +60,12 @@
 				<input class="btn btn-outline-danger" type="reset" value="Cancel" [routerLink]="['/category/all']" />
 				<button class="btn btn-outline-success" (click)="saveArticle()" [disabled]="!articleContent.valid"
 					type="button">
-					Save
+					<div *ngIf="this.is_new_article">
+						Create
+					</div>
+					<div *ngIf="!this.is_new_article">
+						Save
+					</div>
 				</button>
 			</div>
 
